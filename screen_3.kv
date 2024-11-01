@@ -1,0 +1,43 @@
+################################ screen 3 ###############################
+# Définition de la screen3 pour afficher une liste de projets avec options de navigation
+
+<screen3>:
+    theme_bg_color: (0.878, 0.973, 0.980, 1.0)  # Couleur de fond pour l'ensemble de la screen
+
+    # Conteneur principal en disposition verticale
+    MDBoxLayout:
+        orientation: "vertical"
+
+        # Barre d'en-tête pour la navigation et les actions
+        MDTopAppBar:
+            md_bg_color: app.theme_cls.primary_color  # Couleur de fond correspondant au thème principal
+            elevation: 1  # Hauteur de l'ombre
+            title: "My project list"  # Titre affiché dans la barre d'en-tête
+            # Boutons d'actions à droite de la barre d'en-tête
+            right_action_items:[["format-list-numbered", lambda x: app.switch_to_screen("screen_5"), "Client"], ["server", lambda x: app.switch_to_screen("screen_2_1_1"), "Server"] ]# Bouton d'action à gauche
+            left_action_items: [["arrow-left", lambda x: app.switch_to_screen("screen_2_2"), "Retour"]]
+
+        # Conteneur central pour l'affichage de la liste des projets avec défilement
+        MDBoxLayout:
+            orientation: "vertical"
+            padding: 5  # Espacement intérieur autour de la liste
+
+            # Composant de défilement pour la liste des projets
+            MDScrollView:
+                do_scroll_x: False  # Désactive le défilement horizontal
+                do_scroll_y: True   # Active le défilement vertical
+                bar_width: 0  # Masque la barre de défilement pour un design épuré
+                MDList:
+                    id: container  # ID pour ajouter dynamiquement des éléments de liste
+
+        # Barre de navigation inférieure
+        MDBottomAppBar:
+            md_bg_color: app.theme_cls.primary_color  # Couleur de fond correspondant au thème principal
+
+            # Barre d'action inférieure avec icône
+            MDTopAppBar:
+                elevation: 1  # Hauteur de l'ombre
+                title: "Click on"  # Titre de la barre inférieure
+                icon: "youtube"  # Icône de la barre inférieure
+                type: "bottom"  # Place la barre en bas de l'écran
+                mode: "end"  # Positionne l'icône à l'extrémité droite

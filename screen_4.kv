@@ -1,0 +1,80 @@
+################################ screen 4 ###############################
+# Définition de la screen4 pour afficher l'interface de chat avec cryptographie et envoi de messages
+
+<screen4>:
+    theme_bg_color: (0.878, 0.973, 0.980, 1.0)  # Couleur de fond générale de l'écran
+    md_bg_color: "white"  # Couleur de fond de base pour les widgets de la screen
+
+    MDBoxLayout:
+        orientation: "vertical"  # Disposition en colonne
+
+        # Barre d'en-tête avec titre et options de navigation
+        MDTopAppBar:
+            id: bar_id
+            md_bg_color: app.theme_cls.primary_color  # Couleur de fond correspondant au thème principal
+            elevation: 1  # Ombre sous la barre
+            title: "Chat"  # Titre affiché dans la barre d'en-tête
+            # Bouton gauche pour revenir à l'écran précédent (screen 3)
+            left_action_items: [["arrow-left", lambda x: app.switch_to_screen("screen_3"), "Retour"]]
+            # Boutons droits pour activer la cryptographie et aller à une autre screen (screen 5)
+            right_action_items: [["message-lock", lambda x: root.crypto(x), "Cryptographie"], ["format-list-numbered", lambda x: app.switch_to_screen("screen_5")] ]
+
+        # Zone principale pour afficher les messages de chat
+        MDFloatLayout:
+            # Section de défilement pour les messages de chat
+            ScrollView:
+                size_hint_y: .88  # Hauteur de la zone de chat
+                pos_hint: {"x": 0, "y": .116}  # Position verticale dans l'écran
+                do_scroll_x: False  # Désactive le défilement horizontal
+                do_scroll_y: True  # Active le défilement vertical
+                effect_cls: "ScrollEffect"  # Effet de défilement doux
+                BoxLayout:
+                    id: chat_list  # ID pour ajouter dynamiquement des messages
+                    orientation: "vertical"
+                    size: (root.width, root.height)  # Taille de la liste de chat
+                    height: self.minimum_height  # Ajustement dynamique de la hauteur
+                    size_hint: None, None  # Taille fixe
+                    pos_hint: {'top': 10}  # Positionnement vertical
+                    cols: 1
+                    spacing: dp(10)  # Espacement entre les messages
+
+            # Zone d'entrée pour écrire et envoyer des messages
+            MDFloatLayout:
+                md_bg_color: 245/255, 245/255, 245/255, 1  # Couleur de fond pour la zone d'entrée de texte
+                size_hint_y: .11  # Hauteur de la zone d'entrée
+
+                MDFloatLayout:
+                    size_hint: .8, .75  # Taille de la zone de texte par rapport à l'écran
+                    pos_hint: {"center_x": .43, "center_y": .5}  # Positionnement horizontal et vertical
+                    # Style de l'arrière-plan avec bordures arrondies
+                    canvas:
+                        Color:
+                            rgba: 0.878, 0.973, 0.980, 1.0  # Couleur de fond de l'entrée de texte
+                        RoundedRectangle:
+                            size: self.size
+                            pos: self.pos
+                            radius: [23, 23, 23, 23]  # Bordures arrondies de l'entrée de texte
+
+                    # Champ de saisie pour écrire un message
+                    TextInput:
+                        id: text_input  # ID pour récupérer le contenu du champ
+                        hint_text: "Type your message..."  # Texte d'invite pour l'utilisateur
+                        size_hint: 1, None  # Taille de l'entrée
+                        pos_hint: {"center_x": .5, "center_y": .5}  # Centrage de l'entrée
+                        font_size: "17sp"  # Taille de la police
+                        height: self.minimum_height  # Ajuste la hauteur en fonction du contenu
+                        multiline: False  # Désactive l'entrée multilignes
+                        cursor_color: 0.529, 0.804, 0.925, 1.0  # Couleur du curseur
+                        cursor_width: "2sp"  # Largeur du curseur
+                        foreground_color: 0, 0, 0, 1  # Couleur du texte saisi
+                        background_color: 0.878, 0.973, 0.980, 1.0  # Couleur de fond de l'entrée
+                        padding: 5  # Espacement intérieur
+
+                # Bouton d'envoi de message
+                MDIconButton:
+                    icon: "send"  # Icône d'envoi
+                    pos_hint: {"center_x": .91, "center_y": .5}  # Position à droite de l'entrée de texte
+                    user_font_size: "18sp"  # Taille de l'icône
+                    theme_text_color: 'Custom'  # Couleur personnalisée du texte
+                    md_bg_color: 0.529, 0.804, 0.925, 1.0  # Couleur de fond du bouton
+                    on_release: app.send_message()  # Action déclenchée lors du clic pour envoyer le message

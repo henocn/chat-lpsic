@@ -1,0 +1,30 @@
+################################ screen 1 ###############################
+<screen1>:
+    theme_bg_color: (0.878, 0.973, 0.980, 1.0)  # Couleur de fond
+    FloatLayout:  # Utilisation d'un FloatLayout pour le positionnement
+
+        MDFillRoundFlatButton:
+            text: "Serveur"
+            size_hint: None, None
+            size: dp(300), dp(100)
+            pos_hint: {"center_x": 0.5, "center_y": 0.6}
+            #md_bg_color: 0.529, 0.804, 0.925, 1.0  # Couleur de fond personnalisée
+            theme_text_color: "Custom"
+            text_color: 1, 1, 1, 1  # Texte blanc
+            on_press:
+                app.change_color(self, (1.0, 0.5, 0.5, 1.0))  # Changer la couleur sur pression
+            on_release:
+                root.manager.current = "screen_2_1"
+
+        MDFillRoundFlatButton:
+            text: "Client"
+            size_hint: None, None
+            size: dp(300), dp(100)
+            pos_hint: {"center_x": 0.5, "center_y": 0.45}
+            #md_bg_color: 0.529, 0.804, 0.925, 1.0  # Couleur de fond personnalisée
+            theme_text_color: "Custom"
+            text_color: 1, 1, 1, 1  # Texte blanc
+            on_press:
+                app.change_color(self, (1.0, 0.5, 0.5, 1.0))  # Changer la couleur sur pression
+            on_release:
+                root.manager.current = "screen_2_2"

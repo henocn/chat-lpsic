@@ -1,0 +1,167 @@
+<Command>
+    size_hint_y: None
+    pos_hint: {"right": .98}
+    height: self.texture_size[1]
+    padding: 5
+    theme_text_color: "Custom"
+    text_color: 0, 0, 0, 1
+    canvas.before:
+        Color:
+            rgba: (0.529, 0.804, 0.925, 1.0)
+        RoundedRectangle:
+            size: self.width, self.height
+            pos: self.pos
+            radius: [10, 10, 0, 10]
+
+<Response>
+    size_hint_y: None
+    pos_hint: {"x": .02}
+    height: self.texture_size[1]
+    padding: 5
+    canvas.before:
+        Color:
+            rgba: (0.529, 0.804, 0.925, 1.0)
+        RoundedRectangle:
+            size: self.width, self.height
+            pos: self.pos
+            radius: [10, 10, 10, 0]
+
+<MyHoverCard>:
+    elevation: 6
+    md_bg_color: root.default_color
+
+<TextField@MDCard>:
+    md_bg_color: [.9, .1, .9, .1]
+    elevation: 0
+    height: dp(40)
+    size_hint_y: None
+    radius: [15, ]
+    padding: [5, 5, 5, 5]
+
+    MDIconButton:
+        icon: 'emoticon-happy-outline'
+        size_hint_x: None
+        user_font_size: sp(16)
+        pos_hint: {'center_y': .5}
+        theme_text_color: 'Custom'
+        size: dp(30), dp(30)
+        padding: 0
+
+    TextInput:
+        id: textInput
+        font_size: sp(12)
+        cursor_color: .5, .5, .5, 1
+        current_hint_text_color: .5, .5, .5, 1
+        height: dp(30)
+        hint_text: 'Type a Message'
+        padding: [5, ]
+
+    MDIconButton:
+        icon: 'microphone-outline'
+        size_hint_x: None
+        user_font_size: sp(16)
+        pos_hint: {'center_y': .5}
+        size: dp(30), dp(30)
+        padding: 0
+
+    MDIconButton:
+        icon: 'paperclip'
+        size_hint_x: None
+        user_font_size: sp(16)
+        pos_hint: {'center_y': .5}
+        theme_text_color: 'Custom'
+        size: dp(30), dp(30)
+        padding: 0
+
+<ClickableTextFieldRound>:
+    size_hint_y: None
+    height: dp(50)
+
+    MDTextField:
+        id: text_field
+        hint_text: root.hint_text
+        text: root.text
+        background_color: app.theme_cls.bg_normal
+
+    MDIconButton:
+        icon: "information-outline"
+        pos_hint: {"center_y": .6}
+        pos: text_field.width - self.width + dp(8), 0
+        theme_text_color: "Hint"
+        on_release:
+            root.show_info()
+        size_hint: None, None
+        size: "48dp", "48dp"
+
+<Tab>
+    MDLabel:
+        pos_hint: {"center_x": .5, "center_y": .5}
+
+<scann>:
+    theme_bg_color: (0.878, 0.973, 0.980, 1.0)
+    StackLayout:
+        orientation: 'lr-tb'
+        size: root.width, root.height
+
+        MDCard:
+            padding: "4dp"
+            size_hint_y: None
+            height: "40dp"
+
+            MDBoxLayout:
+                orientation: "horizontal"
+                MDIconButton:
+                    icon: "arrow-left"
+                    color: "white"
+                    on_release:
+                        root.manager.current = "screen_1"
+
+                Widget:
+                    size_hint: None, None
+                    width: 80
+
+                MDLabel:
+                    text: "Client"
+                    font_size: "30dp"
+                    adaptive_size: True
+                    color: "grey"
+                    pos: "12dp", "12dp"
+                    bold: True
+
+        Widget:
+            size_hint: None, None
+            height: dp(10)
+
+        MDCard:
+            md_bg_color: .2, .0, .8, .2
+            padding: "4dp"
+            size_hint_y: None
+            height: "300dp"
+
+            MDBoxLayout:
+                orientation: "vertical"
+                # Uncomment the Camera section below for live video display
+                # Camera:
+                #     id: camera
+                #     resolution: (640, 480)
+                #     play: True
+
+        MDCard:
+            md_bg_color: .2, .0, .8, .2
+            padding: "4dp"
+            size_hint_y: None
+            height: "100dp"
+
+            MDBoxLayout:
+                orientation: "vertical"
+                MDLabel:
+                    canvas.before:
+                        Color:
+                            rgba: 1, 0, 0, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    id: qr_result
+                    text: "IP:PORT"
+                    font_size: "18dp"
+                    color: "grey"

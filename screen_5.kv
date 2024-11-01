@@ -1,0 +1,105 @@
+################################ screen 5 ###############################
+<screen5>:
+    # Paramètres de fond et de couleur de thème de l'écran
+    theme_bg_color: (0.878, 0.973, 0.980, 1.0)
+    md_bg_color: "white"
+
+    # Disposition verticale principale pour l'ensemble de l'écran
+    MDBoxLayout:
+        orientation: "vertical"
+
+        # Barre d'outils en haut de l'écran
+        MDTopAppBar:
+            md_bg_color: app.theme_cls.primary_color
+            elevation: 1
+            title: "Connected Users"
+            # Bouton pour revenir à l'écran précédent
+            left_action_items: [["arrow-left", lambda x: app.switch_to_screen("screen_2_2"), "Retour"]]
+            # Boutons pour naviguer vers d'autres écrans ou déconnecter le client
+            right_action_items: [["account-multiple", lambda x: app.switch_to_screen("screen_3"), "Client"],["server", lambda x: app.switch_to_screen("screen_2_1_1")],["logout", lambda x: app.disconnect_client()]]
+
+        # Boîte verticale pour contenir les deux sections principales
+        BoxLayout:
+            orientation: 'vertical'
+
+            # Section pour afficher les clients connectés
+            MDCard:
+                orientation: 'vertical'
+                md_bg_color: (0.878, 0.973, 0.980, 1.0)
+                size_hint_y: 0.5
+                padding: dp(2)
+                title: "Clients connectés"
+
+                # Conteneur pour le titre de la section "Clients connectés"
+                StackLayout:
+                    orientation: 'lr-tb'
+
+                    MDCard:
+                        size_hint_y: None
+                        height: "30dp"
+
+                        # Titre pour la liste des clients connectés
+                        FloatLayout:
+                            MDLabel:
+                                text: "les clients connectés au serveur"
+                                font_size: "18dp"
+                                adaptive_size: True
+                                color: (0.0, 0.0, 1.0, 1.0)
+                                pos_hint: {"center_x": .5, "center_y": .5}
+
+                    # Liste défilante des utilisateurs connectés
+                    BoxLayout:
+                        orientation: "vertical"
+                        size_hint_y: .9
+
+                        ScrollView:
+                            do_scroll_x: False
+                            do_scroll_y: True
+                            bar_width: 2
+                            effect_cls: "ScrollEffect"  # Effet de défilement doux
+
+                            MDBoxLayout:
+                                adaptive_height: True
+                                orientation: 'vertical'
+                                spacing: dp(1)
+                                id: user_list
+                                size_hint_y: None
+                                height: self.minimum_height
+
+            # Section pour afficher les demandes de discussion
+            MDCard:
+                orientation: 'vertical'
+                md_bg_color: (0.878, 0.973, 0.980, 1.0)
+                size_hint_y: 0.5
+                title: "Clients connectés"
+
+                StackLayout:
+                    orientation: 'lr-tb'
+
+                    MDCard:
+                        size_hint_y: None
+                        height: "30dp"
+
+                        # Titre pour la section des demandes de discussion
+                        FloatLayout:
+                            MDLabel:
+                                text: "demandes de discussion"
+                                font_size: "18dp"
+                                adaptive_size: True
+                                color: (0.0, 0.0, 1.0, 1.0)
+                                pos_hint: {"center_x": .5, "center_y": .5}
+
+                    # Liste défilante pour les demandes de discussion
+                    ScrollView:
+                        do_scroll_x: False
+                        do_scroll_y: True
+                        bar_width: 0
+                        effect_cls: "ScrollEffect"  # Effet de défilement doux
+
+                        MDBoxLayout:
+                            adaptive_height: True
+                            orientation: 'vertical'
+                            spacing: dp(1)
+                            id: request_container
+                            size_hint_y: None
+                            height: self.minimum_height

@@ -1,0 +1,425 @@
+
+################################ screen 2_1 : server ###############################
+<screen2_1>:
+    # Définition de la couleur de fond du thème de l'écran
+    theme_bg_color: (0.878, 0.973, 0.980, 1.0)
+
+    # Disposition principale de l'écran utilisant un MDGridLayout
+    MDGridLayout:
+        cols: 1  # Nombre de colonnes
+        size: root.width, root.height  # Taille du layout égale à celle de l'écran
+        padding: "6dp"  # Espacement autour du layout
+
+        # Carte pour l'affichage du titre de l'écran
+        MDCard:
+            padding: "4dp"  # Espacement interne de la carte
+            size_hint_y: None  # Hauteur de la carte définie manuellement
+            height: "40dp"  # Hauteur fixe de la carte
+
+            # BoxLayout pour le contenu horizontal de la carte
+            MDBoxLayout:
+                orientation: "horizontal"  # Orientation horizontale
+
+                # Bouton pour retourner à l'écran précédent
+                MDIconButton:
+                    icon: "arrow-left"  # Icône de la flèche
+                    style: "standard"  # Style du bouton
+                    color: "white"  # Couleur de l'icône
+                    on_release:
+                        root.manager.current = "screen_1"  # Changement d'écran à l'écran 1
+
+                # Widget pour créer un espacement fixe
+                Widget:
+                    size_hint: None, None  # Pas de taille définie
+                    width: 80  # Largeur fixe
+
+                # Étiquette affichant le titre "Server"
+                MDLabel:
+                    text: "Server"  # Texte affiché
+                    font_size: "30dp"  # Taille de la police
+                    adaptive_size: True  # Taille adaptive
+                    color: (0.0, 0.0, 1.0, 1.0)  # Couleur du texte (bleu)
+                    pos: "12dp", "12dp"  # Position de l'étiquette
+                    bold: True  # Texte en gras
+
+        # Widget pour créer un espacement vertical
+        Widget:
+            size_hint: None, None  # Pas de taille définie
+            height: 50  # Hauteur fixe
+
+        # Carte pour l'entrée des informations du serveur
+        MyHoverCard:
+            style: "outlined"  # Style de la carte
+            padding: "4dp"  # Espacement interne
+            size_hint_y: None  # Hauteur de la carte définie manuellement
+            height: "350dp"  # Hauteur fixe de la carte
+            theme_shadow_color: "red"  # Couleur de l'ombre
+            shadow_offset: (1, -2)  # Décalage de l'ombre
+            shadow_softness: 1  # Douceur de l'ombre
+            theme_elevation_level: "Custom"  # Niveau d'élévation personnalisé
+            elevation_level: 6  # Niveau d'élévation
+
+            # Disposition interne de la carte utilisant un MDGridLayout
+            MDGridLayout:
+                cols: 1  # Une seule colonne
+
+                # StackLayout pour empiler les champs d'entrée
+                StackLayout:
+                    orientation: 'lr-tb'  # Orientation de l'empilement
+                    padding: 10  # Espacement interne
+                    spacing: 10  # Espacement entre les éléments
+
+                    # Champ de texte pour le pseudo
+                    ClickableTextFieldRound:
+                        id: pseudo  # Identifiant pour accéder au champ
+                        text_color_normal: "0, 0, 0, 1"  # Couleur du texte
+                        size_hint_y: None  # Pas de taille Y ajustée
+                        height: 50  # Hauteur fixe
+                        hint_text: "Pseudo_s"  # Texte d'indice
+
+                    # Champ de texte pour la description
+                    ClickableTextFieldRound:
+                        id: desc  # Identifiant pour accéder au champ
+                        size_hint_y: None  # Pas de taille Y ajustée
+                        hint_text: "Description_s"  # Texte d'indice
+                        height: 50  # Hauteur fixe
+
+                    # Champ de texte pour le nombre maximum de clients
+                    ClickableTextFieldRound:
+                        id: n  # Identifiant pour accéder au champ
+                        size_hint_y: None  # Pas de taille Y ajustée
+                        height: 50  # Hauteur fixe
+                        hint_text: "max_client"  # Texte d'indice
+                        input_filter: "int"  # Filtrer l'entrée pour accepter uniquement les entiers
+
+                    # Champ de texte pour le port
+                    ClickableTextFieldRound:
+                        id: port  # Identifiant pour accéder au champ
+                        size_hint_y: None  # Pas de taille Y ajustée
+                        height: 50  # Hauteur fixe
+                        hint_text: "Port"  # Texte d'indice
+                        input_filter: "int"  # Filtrer l'entrée pour accepter uniquement les entiers
+
+                # BoxLayout pour le bouton d'activation
+                MDBoxLayout:
+                    spacing: "12dp"  # Espacement entre les éléments
+                    padding: "12dp"  # Espacement interne
+
+                    # Bouton pour activer le serveur
+                    MDFillRoundFlatButton:
+                        text: "Activer"  # Texte du bouton
+                        size_hint: (None, None)  # Pas de taille définie
+                        size: ("280dp", "50dp")  # Taille fixe
+                        on_press: app.change_color(self, (1.0, 0.5, 0.5, 1.0))  # Changer la couleur au press
+                        on_press: app.start_server()  # Appeler la méthode pour démarrer le serveur
+
+################################ screen 2_1_1: Server View ################################
+<screen2_1_1>:
+    theme_bg_color: (0, 0, 0, 1.0)  # Set the background color for the theme
+    StackLayout:
+        orientation: 'lr-tb'  # Layout orientation: left-to-right, top-to-bottom
+        padding: 2  # Padding around the layout
+        spacing: 2  # Space between widgets
+
+        # Header Card with Navigation and Title
+        MDCard:
+            padding: "4dp"
+            radius: [0, 0, 0, 0]  # Card border radius
+            size_hint_y: None
+            height: "40dp"
+
+            # Back Button
+            AnchorLayout:
+                anchor_x: 'left'  # Align to the left
+                anchor_y: 'center'  # Center vertically
+                MDIconButton:
+                    icon: "arrow-left"  # Back arrow icon
+                    style: "standard"
+                    color: "white"
+                    on_release:
+                        root.manager.current = "screen_1"  # Navigate to screen_1
+
+            # Title Label
+            AnchorLayout:
+                anchor_x: 'center'  # Center horizontally
+                anchor_y: 'center'  # Center vertically
+                MDLabel:
+                    text: "Server"  # Title text
+                    font_size: "30dp"  # Font size
+                    adaptive_size: True
+                    color: (0.0, 0.0, 1.0, 1.0)  # Title color
+                    pos: "12dp", "12dp"
+                    bold: True
+
+            # Navigation Button to another screen
+            AnchorLayout:
+                anchor_x: 'right'  # Align to the right
+                anchor_y: 'center'  # Center vertically
+                MDIconButton:
+                    icon: "format-list-numbered"  # Icon for navigation
+                    style: "standard"
+                    color: "white"
+                    on_release:
+                        root.manager.current = "screen_5"  # Navigate to screen_5
+
+        Widget:
+            size_hint: None, None
+            height: 1  # Spacer
+
+        # Card for displaying server details
+        MDCard:
+            size_hint_y: None
+            radius: [0, 0, 0, 0]
+            height: "210dp"
+            GridLayout:
+                cols: 3  # Three columns for data layout
+                padding: 2
+                size_hint_y: None
+                height: "210dp"
+
+                # Pseudo Field
+                Label:
+                    text: "Pseudo"  # Label for Pseudo
+                    size_hint_y: None
+                    font_size: "18sp"
+                    text_size: self.size
+                    height: 35
+                    color: 0, 0, 0, 1
+                    halign: "left"
+                    bold: True
+                Label:
+                    text: ":"  # Separator
+                    size_hint_y: None
+                    color: 0, 0, 0, 1
+                    font_size: "18sp"
+                    text_size: self.size
+                    height: 35
+                    width: 35
+                    halign: "left"
+                    bold: True
+                TextInput:
+                    text: "TestPseudo"  # Placeholder for Pseudo
+                    id: pseudo
+                    background_color: (1, 0, 0, 1)
+                    font_size: "15sp"
+                    text_size: self.size
+                    size_hint_y: None
+                    text_align: "left"
+                    height: 35
+                    readonly: True  # Make read-only
+                    cursor_width: 0  # Hide cursor
+                    background_color: 0, 0, 0, 0  # Transparent background
+                    foreground_color: 0, 0, 0, 1  # Text color
+
+                # Description Field
+                Label:
+                    text: "Desc"  # Label for Description
+                    font_size: "18sp"
+                    size_hint_y: None
+                    color: 0, 0, 0, 1
+                    text_size: self.size
+                    height: 35
+                    halign: "left"
+                    bold: True
+                Label:
+                    text: ":"  # Separator
+                    size_hint_y: None
+                    font_size: "18sp"
+                    color: 0, 0, 0, 1
+                    text_size: self.size
+                    height: 35
+                    width: 35
+                    halign: "left"
+                    bold: True
+                TextInput:
+                    text: "TestDesc"  # Placeholder for Description
+                    id: desc
+                    size_hint_y: None
+                    font_size: "15sp"
+                    text_size: self.size
+                    text_align: "right"
+                    height: 35
+                    readonly: True  # Make read-only
+                    cursor_width: 0
+                    background_color: 0, 0, 0, 0  # Transparent background
+                    foreground_color: 0, 0, 0, 1  # Text color
+
+                # IP Address Field
+                Label:
+                    text: "IP"  # Label for IP
+                    font_size: "18sp"
+                    size_hint_y: None
+                    text_size: self.size
+                    halign: "left"
+                    color: 0, 0, 0, 1
+                    height: 35
+                    bold: True
+                Label:
+                    text: ":"  # Separator
+                    size_hint_y: None
+                    font_size: "18sp"
+                    text_size: self.size
+                    height: 35
+                    width: 35
+                    color: 0, 0, 0, 1
+                    halign: "left"
+                    bold: True
+                TextInput:
+                    text: "192.168.1.1"  # Placeholder for IP
+                    id: ip
+                    font_size: "15sp"
+                    text_size: self.size
+                    size_hint_y: None
+                    text_align: "left"
+                    height: 35
+                    readonly: True  # Make read-only
+                    cursor_width: 0
+                    background_color: 0, 0, 0, 0  # Transparent background
+                    foreground_color: 0, 0, 0, 1  # Text color
+
+                # Port Field
+                Label:
+                    text: "Port"  # Label for Port
+                    font_size: "18sp"
+                    size_hint_y: None
+                    text_size: self.size
+                    halign: "left"
+                    height: 35
+                    color: 0, 0, 0, 1
+                    bold: True
+                Label:
+                    text: ":"  # Separator
+                    size_hint_y: None
+                    font_size: "18sp"
+                    text_size: self.size
+                    height: 35
+                    width: 35
+                    color: 0, 0, 0, 1
+                    halign: "left"
+                    bold: True
+                TextInput:
+                    text: "5000"  # Placeholder for Port
+                    id: port
+                    font_size: "15sp"
+                    text_size: self.size
+                    size_hint_y: None
+                    text_align: "left"
+                    height: 35
+                    readonly: True  # Make read-only
+                    cursor_width: 0
+                    background_color: 0, 0, 0, 0  # Transparent background
+                    foreground_color: 0, 0, 0, 1  # Text color
+
+                # n Field
+                Label:
+                    text: "n"  # Label for n
+                    font_size: "18sp"
+                    size_hint_y: None
+                    text_size: self.size
+                    halign: "left"
+                    height: 35
+                    bold: True
+                    color: 0, 0, 0, 1
+                Label:
+                    text: ":"  # Separator
+                    size_hint_y: None
+                    font_size: "18sp"
+                    text_size: self.size
+                    height: 35
+                    width: 35
+                    halign: "left"
+                    bold: True
+                    color: 0, 0, 0, 1
+                TextInput:
+                    text: "5"  # Placeholder for n
+                    id: n
+                    font_size: "15sp"
+                    text_size: self.size
+                    size_hint_y: None
+                    height: 35
+                    readonly: True  # Make read-only
+                    halign: "left"
+                    text_align: "left"
+                    cursor_width: 0
+                    background_color: 0, 0, 0, 0  # Transparent background
+                    foreground_color: 0, 0, 0, 1  # Text color
+
+        Widget:
+            size_hint: None, None
+            height: 1  # Spacer
+
+        # QR Code Card
+        MDCard:
+            padding: "4dp"
+            size_hint_y: None
+            radius: [0, 0, 0, 0]
+            height: "100dp"
+            AnchorLayout:
+                anchor_x: 'center'  # Center horizontally
+                anchor_y: 'center'  #
+                Image:
+                    source: 'server_qr_code.png'  # Display QR code image
+                    size_hint: None, None
+                    size: "90dp", "90dp"  # Set image size
+
+
+
+
+        Widget:
+            size_hint: None, None
+            height: 1
+
+        MDCard
+            #md_bg_color: .2, .9, .8, .2
+            radius: [0, 0, 0, 0]
+            padding: "4dp"
+            size_hint_y: None
+            height: "180dp"
+            BoxLayout:
+                orientation: "vertical"
+                ScrollView:
+                    do_scroll_x: False
+                    do_scroll_y: True
+                    bar_width: 2 #Making the scroll bar disappear :)
+                    effect_cls: "ScrollEffect"  # Au lieu de "DampedScrollEffect"
+                    MDBoxLayout:
+                        adaptive_height: True
+                        orientation: 'vertical'
+                        spacing: dp(1)
+                        id: client_list
+                        size_hint_y: None
+                        height: self.minimum_height
+
+        Widget:
+            size_hint: None, None
+            height: 1  # Spacer
+
+        # Card for server control buttons
+        MDCard:
+            md_bg_color: .2, .9, .8, .2  # Background color for the control card
+            size_hint_y: None  # Allow height to be defined explicitly
+            radius: [0, 0, 0, 0]  # Card border radius
+            height: "90dp"  # Fixed height for the control card
+            orientation: 'vertical'  # Vertical orientation for buttons
+
+            # Stop button
+            AnchorLayout:
+                anchor_x: 'center'  # Center horizontally
+                anchor_y: 'center'  # Center vertically
+                MDFillRoundFlatButton:
+                    text: "Stop"  # Button text for stopping server
+                    size_hint: (None, None)  # Fixed size for the button
+                    size: ("280dp", "50dp")  # Button size
+                    pos_hint: {"center_x": .5, "center_y": .6}  # Center position
+                    on_press: app.stop_server()  # Call function to stop server
+
+            # Client navigation button
+            AnchorLayout:
+                anchor_x: 'center'  # Center horizontally
+                anchor_y: 'center'  # Center vertically
+                MDFillRoundFlatButton:
+                    text: "Client"  # Button text for navigating to client screen
+                    size_hint: (None, None)  # Fixed size for the button
+                    size: ("280dp", "50dp")  # Button size
+                    pos_hint: {"center_x": .5, "center_y": .4}  # Center position
+                    on_press: root.manager.current = "screen_2_2"  # Navigate to client screen

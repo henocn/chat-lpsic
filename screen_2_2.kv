@@ -1,0 +1,171 @@
+################################ screen 2_2 ###############################
+<screen2_2>:
+    theme_bg_color: (0.878, 0.973, 0.980, 1.0)  # Définition de la couleur de fond de l'écran
+    StackLayout:
+        orientation: 'lr-tb'  # Organisation des éléments de gauche à droite et de haut en bas
+        size: root.width, root.height
+
+        MDCard
+            padding: "4dp"
+            size_hint_y: None
+            height: "40dp"
+
+            # Section de navigation
+            AnchorLayout:
+                anchor_x: 'left'  # Positionne les éléments sur la gauche
+                anchor_y: 'center'  # Centre verticalement les éléments
+                MDIconButton
+                    icon: "arrow-left"  # Icône pour revenir à l'écran précédent
+                    style: "standard"
+                    color: "white"
+                    on_release:
+                        root.manager.current = "screen_1"
+
+            AnchorLayout:
+                anchor_x: 'center'
+                anchor_y: 'center'
+                MDLabel:
+                    text: "Server"  # Titre de l'écran
+                    font_size: "30dp"
+                    adaptive_size: True
+                    color: (0.0, 0.0, 1.0, 1.0)
+                    pos: "12dp", "12dp"
+                    bold: True
+
+            AnchorLayout:
+                anchor_x: 'right'
+                anchor_y: 'center'
+                MDIconButton
+                    icon: "server"  # Icône de serveur pour identifier l'écran
+                    style: "standard"
+                    color: "white"
+                    on_release:
+                        root.manager.current = "screen_2_1_1"
+
+        # Espacement entre les sections
+        Widget:
+            size_hint: None, None
+            height: dp(10)
+
+        MDCard
+            padding: "4dp"
+            size_hint_y: None
+            height: "100dp"
+
+            # Section pour entrer des informations utilisateur
+            StackLayout:
+                orientation: 'lr-tb'
+                padding: 10
+                spacing: 10
+
+                ClickableTextFieldRound:
+                    id: pseudo  # Champ pour le pseudo
+                    size_hint_y: None
+                    height: dp(50)
+                    hint_text: "Pseudo_c"
+
+                ClickableTextFieldRound:
+                    id: desc  # Champ pour la description
+                    size_hint_y: None
+                    hint_text: "Description_c"
+                    height: dp(50)
+
+        # Autre espacement
+        Widget:
+            size_hint: None, None
+            height: dp(10)
+
+        MDCard
+            padding: "4dp"
+            size_hint_y: None
+            height: "100dp"
+
+            # Section pour afficher les informations du serveur
+            MDBoxLayout:
+                orientation: "vertical"
+                MDLabel:
+                    text: ""
+                    id: nom_server  # Nom du serveur
+                    font_size: "18dp"
+                    color: "grey"
+                    pos: "12dp", "12dp"
+                    bold: True
+                MDLabel:
+                    text: ""
+                    id: n_server  # ID du serveur
+                    font_size: "18dp"
+                    color: "grey"
+                    pos: "12dp", "12dp"
+                    bold: True
+                MDLabel:
+                    text: ""
+                    id: ip_server  # Adresse IP du serveur
+                    font_size: "18dp"
+                    color: "grey"
+                    pos: "12dp", "12dp"
+                    bold: True
+                MDLabel:
+                    text: ""
+                    id: port_server  # Port du serveur
+                    font_size: "18dp"
+                    color: "grey"
+                    pos: "12dp", "12dp"
+                    bold: True
+
+        Widget:
+            size_hint: None, None
+            height: dp(10)
+
+        MDCard
+            md_bg_color: .2, .0, .8, .2
+            padding: "4dp"
+            size_hint_y: None
+            height: "250dp"
+
+            MDTabs:
+                id: tabs
+                text_color_normal: 0, 1, 0, 1
+                text_color_active: 1, 0, 0, 1
+                color_indicator: 0.95, 0.95, 0.1, 1
+                tab_indicator_anim: False  # Désactive l'animation de changement d'onglet
+
+                # Onglet pour la connexion manuelle
+                Tab:
+                    title: "Manuelle"
+                    StackLayout:
+                        orientation: 'lr-tb'
+                        padding: dp(6)
+                        spacing: dp(6)
+
+                        ClickableTextFieldRound:
+                            id: ip  # Champ pour entrer l'IP du serveur
+                            height: dp(50)
+                            hint_text: "SERVER_IP"
+                            required: True
+
+                        ClickableTextFieldRound:
+                            id: port  # Champ pour entrer le port du serveur
+                            hint_text: "SERVER_PORT"
+                            height: dp(50)
+                            required: True
+                            input_filter: 'int'
+
+                        MDFillRoundFlatButton:
+                            text: "Connecter"  # Bouton de connexion au serveur
+                            size_hint: None, None
+                            size: dp(200), dp(50)
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                            on_press: app.connect_client()
+
+                # Onglet pour la connexion par QR Code
+                Tab:
+                    title: "Code QR"
+                    MDFloatLayout:
+                        padding: '8dp'
+                        spacing: '6dp'
+
+                        MDFillRoundFlatButton:
+                            text: "Scanner"  # Bouton pour scanner un QR code
+                            on_press: app.change_color(self, (1.0, 0.5, 0.5, 1.0))
+                            pos_hint: {"center_x": .5, "center_y": .5}
+
