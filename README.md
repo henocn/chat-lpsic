@@ -14,7 +14,7 @@
 Pour installer et exécuter cette application, suivez les étapes ci-dessous :
 
    ```bash
- git clone https://github.com/votre-utilisateur/chat-lpsic.git
+ git clone https://github.com/henocn/chat-lpsic.git
  cd chat-lpsic
  pip install -r requirements.txt
  python main.py
